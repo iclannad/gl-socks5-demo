@@ -21,8 +21,14 @@ func handleConnection(clientConn net.Conn) {
 		return
 	}
 
-	targetStr := fmt.Sprintf("%s:%d", addr.IP, addr.Port)
-	log.Println("targetStr==", targetStr)
+	var targetStr string
+	if addr.IP != nil {
+		targetStr = fmt.Sprintf("%s:%d", addr.IP, addr.Port)
+	} else {
+		targetStr = fmt.Sprintf("%s:%d", addr.Name, addr.Port)
+	}
+
+	log.Println("targetStr=", targetStr)
 	// 连接目标服务器
 	targetConn, err := net.Dial("tcp", targetStr)
 	if err != nil {
