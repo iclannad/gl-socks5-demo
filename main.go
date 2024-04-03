@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net"
 )
 
@@ -20,8 +21,10 @@ func handleConnection(clientConn net.Conn) {
 		return
 	}
 
+	targetStr := fmt.Sprintf("%s:%d", addr.IP, addr.Port)
+	log.Println("targetStr==", targetStr)
 	// 连接目标服务器
-	targetConn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", addr.IP, addr.Port))
+	targetConn, err := net.Dial("tcp", targetStr)
 	if err != nil {
 		fmt.Printf("Error connecting to target: %s\n", err)
 		return
